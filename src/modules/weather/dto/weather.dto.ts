@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Part } from '../enum/weather.enum';
 
 export class WeatherDto {
   @ApiProperty({ description: 'Longitude', example: 32.4325 })
-  log: number;
+  lon: number;
 
   @ApiProperty({
     description: 'latitude',
@@ -12,7 +13,8 @@ export class WeatherDto {
 
   @ApiProperty({
     description: 'Part',
-    example: 'west',
+    enum: Part,
+    example: Part.CURRENT,
   })
-  part: string;
+  part: Part;
 }

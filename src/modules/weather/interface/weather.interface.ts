@@ -11,7 +11,7 @@ export interface APIResponseInterface {
 export interface WeatherModelInterface {
   id?: number;
   lat: number;
-  log: number;
+  lon: number;
   part: string;
   weather: APIResponseInterface;
   createdAt?: string;
@@ -20,6 +20,6 @@ export interface WeatherModelInterface {
 
 export type WeatherInfo = {
   lat: number;
-  log: number;
+  lon: number;
   part: string;
 };

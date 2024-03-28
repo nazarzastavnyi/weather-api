@@ -15,4 +15,4 @@ RUN npm run build
 
 EXPOSE ${APP_PORT}
 
-ENTRYPOINT [ "./startup.sh" ]
+CMD [ "npm", "run", "start:prod" ]

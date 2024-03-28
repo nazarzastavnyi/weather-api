@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UseInterceptors,
+} from '@nestjs/common';
 import { WeatherService } from './wether.service';
 import {
   ApiBadRequestResponse,
@@ -10,6 +17,7 @@ import { ErrorResponseDto } from '@common/dto/error.response.dto';
 import { ApiCreatedDataResponse, ApiOkDataResponse } from '@common/decorators';
 import { WeatherModel } from './model/weather.model';
 import { WeatherModelInterface } from './interface/weather.interface';
+import { WeatherInterceptor } from './interceptors/weather.interceptor';
 
 @ApiTags('Weather')
 @Controller('wheather')
@@ -25,10 +33,10 @@ export class WeatherController {
     type: ErrorResponseDto,
   })
   @Post('/')
-  async createAdminInfo(
+  async saveOrUpdateWeather(
     @Body() weatherDto: WeatherDto,
   ): Promise<{ success: boolean }> {
-    const success = await this.weatherService.saveWeather(weatherDto);
+    const success = await this.weatherService.saveOrUpdateWeather(weatherDto);
 
     return { success };
   }
@@ -42,13 +50,14 @@ export class WeatherController {
     type: ErrorResponseDto,
   })
   @Get('/')
+  @UseInterceptors(WeatherInterceptor)
   async getWeather(
-    @Query('log') log: number,
+    @Query('lon') lon: number,
     @Query('lat') lat: number,
     @Query('part') part: string,
   ): Promise<WeatherModelInterface> {
     const info = await this.weatherService.getWeather({
-      log,
+      lon,
       lat,
       part,
     });

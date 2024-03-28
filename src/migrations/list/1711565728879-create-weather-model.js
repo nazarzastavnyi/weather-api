@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      log: {
+      lon: {
         type: Sequelize.FLOAT,
         allowNull: false,
       },

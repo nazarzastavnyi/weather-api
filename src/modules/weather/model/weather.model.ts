@@ -12,7 +12,7 @@ export class WeatherModel extends Model implements WeatherModelInterface {
   @Column({ type: DataType.NUMBER, allowNull: false })
   lat: number;
   @Column({ type: DataType.NUMBER, allowNull: false })
-  log: number;
+  lon: number;
   @Column({ type: DataType.STRING, allowNull: false })
   part: string;
   @Column({ type: DataType.JSONB })

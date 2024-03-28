@@ -5,35 +5,34 @@ import {
   WeatherInfo,
   WeatherModelInterface,
 } from './interface/weather.interface';
+import { IWeatherGateway } from '@common/gateways/interface/i-weather.gateway';
 
 @Injectable()
 export class WeatherService {
   constructor(
     @Inject(IWeatherRepository) private weatherRepository: IWeatherRepository,
+    @Inject(IWeatherGateway)
+    private weatherGateway: IWeatherGateway,
   ) {}
 
-  async saveWeather(info: WeatherInfo): Promise<boolean> {
+  async saveOrUpdateWeather(info: WeatherInfo): Promise<boolean> {
     const record: WeatherModelInterface =
       await this.weatherRepository.findOne(info);
 
+    const weather = await this.weatherGateway.getWeather(info);
+    const model: WeatherModelInterface = {
+      lon: info.lon,
+      lat: info.lat,
+      part: info.part,
+      weather,
+    };
     if (!record) {
-      const model: WeatherModelInterface = {
-        log: info.log,
-        lat: info.lat,
-        part: info.part,
-        weather: {
-          sunrise: 1684926645,
-          sunset: 1684977332,
-          temp: 292.55,
-          feels_like: 292.87,
-          pressure: 1014,
-          uvi: 0.16,
-          wind_speed: 3.13,
-        },
-      };
       await this.weatherRepository.create(model);
-      return true;
+    } else {
+      await this.weatherRepository.update(record.id, model);
     }
+
+    return true;
   }
 
   async getWeather(info: WeatherInfo): Promise<WeatherModelInterface> {

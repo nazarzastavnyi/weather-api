@@ -15,7 +15,7 @@ export class WeatherRepository implements IWeatherRepository {
 
   async create(data: WeatherModelInterface): Promise<WeatherModel> {
     return this.weatherModel.create({
-      log: data.log,
+      lon: data.lon,
       lat: data.lat,
       part: data.part,
       weather: data.weather,
@@ -26,9 +26,18 @@ export class WeatherRepository implements IWeatherRepository {
     return this.weatherModel.findOne({
       where: {
         lat: info.lat,
-        log: info.log,
+        lon: info.lon,
         part: info.part,
       },
+    });
+  }
+
+  async update(id: number, info: WeatherInfo): Promise<any> {
+    return this.weatherModel.update(info, {
+      where: {
+        id,
+      },
+      returning: true,
     });
   }
 }
