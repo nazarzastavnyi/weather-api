@@ -20,8 +20,8 @@ This project aims to create a Node.js application that fetches weather data from
     "lon": -74.0060,
     "part": "current"
   }
-
-  ### GET API
+  ```
+### GET API
 
 - **Endpoint**: `/weather`
 - **Method**: GET
