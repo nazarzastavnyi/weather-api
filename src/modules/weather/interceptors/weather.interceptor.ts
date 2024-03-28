@@ -12,13 +12,13 @@ export class WeatherInterceptor implements NestInterceptor {
     return next.handle().pipe(
       map((data: any) => {
         const item = {
-          sunrise: data?.sunrise,
-          sunset: data?.sunset,
-          temp: data?.temp,
-          feels_like: data?.feels_like,
-          pressure: data?.pressure,
-          uvi: data?.uvi,
-          wind_speed: data?.wind_speed,
+          sunrise: data.weather.sunrise,
+          sunset: data.weather.sunset,
+          temp: data.weather.temp,
+          feels_like: data.weather.feels_like,
+          pressure: data.weather.pressure,
+          uvi: data.weather.uvi,
+          wind_speed: data.weather.wind_speed,
         };
         return item;
       }),
