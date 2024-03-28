@@ -18,7 +18,7 @@ export class WeatherGateway implements IWeatherGateway {
     return new Promise((resolve: any, reject: any) => {
       axios
         .get(
-          `https://api.openweathermap.org/data/3.0/onecall?lat=${weatherData.lat}&lon=${weatherData.lon}&exclude=${weatherData.part}&appid=${process.env.WEATHER_API_KEY}`,
+          `https://api.openweathermap.org/data/3.0/onecall?lat=${weatherData.lat}&lon=${weatherData.lon}&appid=${process.env.WEATHER_API_KEY}`,
         )
         .then((data) => {
           const partData = data.data[weatherData.part];
